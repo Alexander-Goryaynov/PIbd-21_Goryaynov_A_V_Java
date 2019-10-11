@@ -130,32 +130,25 @@ public class MainWindow {
 		textField.setColumns(10);
 	}
 	private void createNewShip() {
-		boolean first = false;
-		boolean second = false;
-		boolean third = false;
+		Decks numDeck;
 		int numDecks = Integer.parseInt(textField.getText());
 		switch (numDecks) {
 		case 1:
-			first = true;
+			numDeck = Decks.One;
 			break;
 		case 2:
-			first = true;
-			second = true;
+			numDeck = Decks.Two;
 			break;
 		case 3:
-			first = true;
-			second = true;
-			third = true;
+			numDeck = Decks.Three;
 			break;
 		default:
-			first = true;
-			second = true;
-			third = true;
+			numDeck = Decks.Three;
 			break;
 		}
 		Random rnd = new Random();
 		ship = new Ship(rnd.nextInt(30)+20, rnd.nextInt(60)+140, 
-                Color.gray, Color.blue, first, second, third, true, true);				
+                Color.gray, Color.blue, numDeck, true, true);				
 		panel = new MyPanel(ship);
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(10, 10, 900, 500);

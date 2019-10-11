@@ -9,23 +9,18 @@ public class Ship {
     private int weight;
     private Color mainColor;
     private Color dopColor;
-    private boolean firstDeck;
-    private boolean secondDeck;
-    private boolean thirdDeck;
+    private Decks numDeck;
     private boolean pipe;
     private boolean lights;
     private final int shipWidth = 90;
     private final int shipHeight = 50;
     public Ship(int maxSpeed, int weight, Color mainColor, Color dopColor, 
-            boolean firstDeck, boolean secondDeck, boolean thirdDeck, 
-            boolean pipe, boolean lights) {
+            Decks numDeck, boolean pipe, boolean lights) {
     	this.setMaxSpeed(maxSpeed);
     	this.setWeight(weight);
     	this.setMainColor(mainColor);
     	this.setDopColor(dopColor);
-    	this.setFirstDeck(firstDeck);
-    	this.setSecondDeck(secondDeck);
-    	this.setThirdDeck(thirdDeck);
+    	this.setNumDeck(numDeck);
     	this.setPipe(pipe);
     	this.setLights(lights);
     }
@@ -53,23 +48,11 @@ public class Ship {
     public Color getDopColor () {
     	return dopColor;
     }
-    public void setFirstDeck (boolean firstDeck) {
-    	this.firstDeck = firstDeck;
+    public void setNumDeck (Decks numDeck) {
+    	this.numDeck = numDeck;
     }
-    public boolean getFirstDeck () {
-    	return firstDeck;
-    }
-    public void setSecondDeck (boolean secondDeck) {
-    	this.secondDeck = secondDeck;
-    }
-    public boolean getSecondDeck () {
-    	return secondDeck;
-    }
-    public void setThirdDeck (boolean thirdDeck) {
-    	this.thirdDeck = thirdDeck;
-    }
-    public boolean getThirdDeck () {
-    	return thirdDeck;
+    public Decks getNumDeck() {
+    	return numDeck;
     }
     public void setPipe (boolean pipe) {
     	this.pipe = pipe;
@@ -129,7 +112,7 @@ public class Ship {
         	g.setColor(Color.black);
             g.fillRect(startPosX - 20, startPosY - 25, 15, 50);
         }
-        if (getThirdDeck())
+        if (numDeck == Decks.Three)
         {
         	g.setColor(mainColor);
             g.fillRect(startPosX - 25, startPosY - 20, 50, 10);
@@ -143,7 +126,7 @@ public class Ship {
                 g.drawRect(i, startPosY - 17, 10, 5);                    
             }
         }
-        if (getSecondDeck())
+        if ((numDeck == Decks.Three) || (numDeck == Decks.Two))
         {
         	g.setColor(mainColor);
             g.fillRect(startPosX - 30, startPosY - 10, 60, 10);
@@ -157,7 +140,8 @@ public class Ship {
                 g.drawRect(i, startPosY - 7, 10, 5);                    
             }
         }
-        if (getFirstDeck())
+        if ((numDeck == Decks.One)||(numDeck == Decks.Two) || 
+        		(numDeck == Decks.Three))
         {
         	g.setColor(mainColor);
             g.fillRect(startPosX - 35, startPosY, 70, 10);
