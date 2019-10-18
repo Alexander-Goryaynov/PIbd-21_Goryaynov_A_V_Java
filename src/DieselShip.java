@@ -63,7 +63,7 @@ public class DieselShip extends Ship {
         }		
         // basement
         super.drawShip(g);
-        decks.drawDecks(numDeck, g, Color.green, super.dopColor, startPosX, startPosY);
+        decks.drawDecks(numDeck, g, Color.gray, super.dopColor, startPosX, startPosY);
         
         // lights
         if (getLights())
