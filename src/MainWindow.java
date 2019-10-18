@@ -11,18 +11,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.Font;
 
 public class MainWindow {
 
 	private JFrame frame;
 	private MyPanel panel;
-	private Ship ship;
+	private ITransport ship;
 	private JButton btnUp;
 	private JButton btnRight;
 	private JButton btnLeft;
 	private JButton btnDown;
-	private JButton btnCreate;
+	private JButton btnCreateDieselShip;
 	private JTextField textField;
+	private JButton btnCreateShip;
 
 	/**
 	 * Launch the application.
@@ -57,11 +59,12 @@ public class MainWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		btnCreate = new JButton("\u0421\u043E\u0437\u0434\u0430\u0442\u044C");
-		btnCreate.addActionListener(new ActionListener() {
+		btnCreateDieselShip = new JButton("\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0442\u0435\u043F\u043B\u043E\u0445\u043E\u0434");
+		btnCreateDieselShip.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnCreateDieselShip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textField.getText().equals("")) {
-					createNewShip();
+					createNewDieselShip();
 					btnUp.setEnabled(true);
 					btnRight.setEnabled(true);
 					btnLeft.setEnabled(true);
@@ -69,8 +72,8 @@ public class MainWindow {
 				}				
 			}
 		});
-		btnCreate.setBounds(10, 521, 119, 43);
-		frame.getContentPane().add(btnCreate);
+		btnCreateDieselShip.setBounds(10, 521, 123, 43);
+		frame.getContentPane().add(btnCreateDieselShip);
 		
 		btnUp = new JButton("");
 		btnUp.setEnabled(false);
@@ -81,7 +84,7 @@ public class MainWindow {
 				panel.repaint();
 			}
 		});
-		btnUp.setBounds(257, 514, 50, 50);
+		btnUp.setBounds(330, 514, 50, 50);
 		frame.getContentPane().add(btnUp);
 		
 		btnRight = new JButton("");
@@ -93,7 +96,7 @@ public class MainWindow {
 				panel.repaint();
 			}
 		});
-		btnRight.setBounds(317, 541, 50, 50);
+		btnRight.setBounds(390, 541, 50, 50);
 		frame.getContentPane().add(btnRight);
 		
 		btnLeft = new JButton("");
@@ -105,7 +108,7 @@ public class MainWindow {
 				panel.repaint();
 			}
 		});
-		btnLeft.setBounds(197, 541, 50, 50);
+		btnLeft.setBounds(270, 541, 50, 50);
 		frame.getContentPane().add(btnLeft);
 		
 		btnDown = new JButton("");
@@ -117,7 +120,7 @@ public class MainWindow {
 				panel.repaint();
 			}
 		});
-		btnDown.setBounds(257, 567, 50, 50);
+		btnDown.setBounds(330, 567, 50, 50);
 		frame.getContentPane().add(btnDown);
 		
 		JLabel label = new JLabel("\u041F\u0430\u043B\u0443\u0431:");
@@ -128,8 +131,34 @@ public class MainWindow {
 		textField.setBounds(65, 571, 96, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
+		
+		btnCreateShip = new JButton("\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
+		btnCreateShip.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnCreateShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createNewShip();
+				btnUp.setEnabled(true);
+				btnRight.setEnabled(true);
+				btnLeft.setEnabled(true);
+				btnDown.setEnabled(true);
+			}
+		});
+		btnCreateShip.setBounds(143, 521, 117, 43);
+		frame.getContentPane().add(btnCreateShip);
 	}
 	private void createNewShip() {
+		Random rnd = new Random();
+		ship = new Ship(rnd.nextInt(30)+20, rnd.nextInt(60)+140, 
+                Color.gray, Color.blue);				
+		panel = new MyPanel(ship);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(10, 10, 900, 500);
+		frame.getContentPane().add(panel);
+		ship.setPosition(rnd.nextInt(50)+50, rnd.nextInt(50)+50, 
+                panel.getWidth(), panel.getHeight());				
+		panel.repaint();
+	}
+	private void createNewDieselShip() {
 		Decks numDeck;
 		int numDecks = Integer.parseInt(textField.getText());
 		switch (numDecks) {
@@ -147,8 +176,8 @@ public class MainWindow {
 			break;
 		}
 		Random rnd = new Random();
-		ship = new Ship(rnd.nextInt(30)+20, rnd.nextInt(60)+140, 
-                Color.gray, Color.blue, numDeck, true, true);				
+		ship = new DieselShip(rnd.nextInt(30)+20, rnd.nextInt(60)+140, numDeck, 
+				Color.gray, Color.blue, Color.yellow, true, true);				
 		panel = new MyPanel(ship);
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(10, 10, 900, 500);
