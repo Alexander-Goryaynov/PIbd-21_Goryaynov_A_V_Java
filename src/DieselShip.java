@@ -16,18 +16,7 @@ public class DieselShip extends Ship {
             this.setPipe(pipe);
             this.setLights(lights);
             this.setNumDeck(numDeck);
-            Random rnd = new Random();
-            switch (rnd.nextInt(3)) {
-			case 0:
-				decks = new StandardDecks();
-				break;
-			case 1:
-				decks = new RoundedDecks();
-				break;
-			case 2:
-				decks = new TrapezeDecks();
-				break;
-			}
+            decks = new StandardDecks();
         }
 	private void setLightsColor(Color lightsColor) {
 		if (lightsColor != Color.black) this.lightsColor = lightsColor;
