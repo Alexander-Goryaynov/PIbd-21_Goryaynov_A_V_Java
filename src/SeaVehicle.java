@@ -10,7 +10,13 @@ public abstract class SeaVehicle implements ITransport {
     protected int weight;
     protected Color mainColor;
     protected Color dopColor;
-    public int getMaxSpeed() {
+    public int getStartPosX() {
+		return startPosX;
+	}
+	public int getStartPosY() {
+		return startPosY;
+	}
+	public int getMaxSpeed() {
 		return maxSpeed;
 	}
 	protected void setMaxSpeed(int maxSpeed) {
