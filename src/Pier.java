@@ -1,12 +1,14 @@
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.HashMap;
 
 public class Pier<T extends ITransport, U extends IDecks> {
-	private T[] places;
-	private U[] placesDecks;
+	HashMap<Integer, T> places;
+	HashMap<Integer, U> placesDecks;
 	private int pictureWidth;
     private int pictureHeight;
+    public int maxCount;
 	public int getPictureWidth() {
 		return pictureWidth;
 	}
@@ -21,26 +23,21 @@ public class Pier<T extends ITransport, U extends IDecks> {
 	}
 	private final int placeSizeWidth = 210;
     private final int placeSizeHeight = 80;
-    @SuppressWarnings("unchecked")
-	public Pier(int sizes, int pictureWidth, int pictureHeight)
+    public Pier(int sizes, int pictureWidth, int pictureHeight)
     {
-        this.places = (T[]) new ITransport[sizes];
-        this.placesDecks = (U[]) new IDecks[sizes];
+        this.places = new HashMap<>(sizes);
+        this.placesDecks = new HashMap<>(sizes);
         setPictureWidth(pictureWidth);
         setPictureHeight(pictureHeight);
-        for (int i = 0; i < places.length; i++)
-        {
-            places[i] = null;
-            placesDecks[i] = null;
-        }
+        this.maxCount = sizes;
     }
     public int plus(T ship) {
-    	for (int i = 0; i < places.length; i++)
+    	for (int i = 0; i < maxCount; i++)
         {
-            if (this.checkFreePlace(i))
+            if (checkFreePlace(i))
             {
-                places[i] = ship;
-                places[i].setPosition(5 + i / 5 * placeSizeWidth + 50, 
+                places.put(i, ship);
+                places.get(i).setPosition(5 + i / 5 * placeSizeWidth + 50, 
                     i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
                 return i;
             }
@@ -48,15 +45,15 @@ public class Pier<T extends ITransport, U extends IDecks> {
         return -1;
     }
     public int plus(T ship, U decks) {
-    	for (int i = 0; i < places.length; i++)
+    	for (int i = 0; i < maxCount; i++)
         {
-            if (this.checkFreePlace(i))
+            if (checkFreePlace(i))
             {
-                places[i] = ship;
-                places[i].setPosition(5 + i / 5 * placeSizeWidth + 50, 
+                places.put(i, ship);
+                places.get(i).setPosition(5 + i / 5 * placeSizeWidth + 50, 
                     i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
-                placesDecks[i] = decks;
-                placesDecks[i].setPosition(5 + i / 5 * placeSizeWidth + 50,
+                placesDecks.put(i, decks);
+                placesDecks.get(i).setPosition(5 + i / 5 * placeSizeWidth + 50,
                 		i % 5 * placeSizeHeight + 45);
                 return i;
             }
@@ -64,47 +61,47 @@ public class Pier<T extends ITransport, U extends IDecks> {
         return -1;
     }
     public T minus(int index) {
-    	if (index < 0 || index > places.length)
+    	if (index < 0 || index > maxCount)
         {
             return null;
         }
-        if (!this.checkFreePlace(index))
+        if (!checkFreePlace(index))
         {
-            T ship = places[index];
-            places[index] = null;
+            T ship = places.get(index);
+            places.remove(index);
             return ship;
         }
         return null;
     }
     public U minusDecks(int index) {
-    	if (index < 0 || index > places.length)
+    	if (index < 0 || index > maxCount)
         {
             return null;
         }
-        if (placesDecks[index] != null)
+        if (placesDecks.containsKey(index))
         {
-            U box = placesDecks[index];
-            placesDecks[index] = null;
+            U box = placesDecks.get(index);
+            placesDecks.remove(index);
             return box;
         }
         return null;
     }
     private boolean checkFreePlace(int index)
     {
-        return (places[index] == null);
+        return !(places.containsKey(index));
     }
     public void draw(Graphics g)
     {
     	drawMarking(g);
-        for (int i = 0; i < places.length; i++)
+        for (int i = 0; i < maxCount; i++)
         {
             if (!checkFreePlace(i))
             {
-                places[i].drawShip(g);
-                if (placesDecks[i] != null) {
-                	placesDecks[i].drawPierDecks(g, placesDecks[i].getPositionX(),
-                			placesDecks[i].getPositionY(), places[i].getMainColor(), 
-                			places[i].getDopColor());
+                places.get(i).drawShip(g);
+                if (placesDecks.containsKey(i)) {
+                	placesDecks.get(i).drawPierDecks(g, placesDecks.get(i).getPositionX(),
+                			placesDecks.get(i).getPositionY(), places.get(i).getMainColor(), 
+                			places.get(i).getDopColor());
                 }
             }
         }        
@@ -113,8 +110,8 @@ public class Pier<T extends ITransport, U extends IDecks> {
     {
     	Graphics2D g2 = (Graphics2D) g;
     	g2.setStroke((new BasicStroke(3f)));
-        g2.drawRect(0, 0, (places.length / 5) * placeSizeWidth, 480);
-        for (int i = 0; i < places.length / 5; i++)
+        g2.drawRect(0, 0, (maxCount / 5) * placeSizeWidth, 480);
+        for (int i = 0; i < maxCount / 5; i++)
         {
             for (int j = 0; j < 6; j++)
             {
