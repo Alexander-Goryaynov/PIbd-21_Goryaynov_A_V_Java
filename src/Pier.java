@@ -4,11 +4,19 @@ import java.awt.Graphics2D;
 import java.util.HashMap;
 
 public class Pier<T extends ITransport, U extends IDecks> {
-	HashMap<Integer, T> places;
-	HashMap<Integer, U> placesDecks;
+	private HashMap<Integer, T> places;
+	private HashMap<Integer, U> placesDecks;
 	private int pictureWidth;
     private int pictureHeight;
     public int maxCount;
+    
+	public T getPlace(int i) {
+		return places.get(i);
+	}
+	public U getPlacesDeck(int i) {
+		return placesDecks.get(i);
+	}
+	
 	public int getPictureWidth() {
 		return pictureWidth;
 	}

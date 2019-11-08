@@ -20,7 +20,7 @@ public class MultiLevelPier {
 	public ITransport getShip(int i, int j) {
 		if((i > -1) && (i < pierStages.size())) {
 			if((j > -1) && (j < pierStages.get(i).maxCount)) {
-				ITransport ship = pierStages.get(i).places.get(j);
+				ITransport ship = pierStages.get(i).getPlace(j);
 				pierStages.get(i).minus(j);
 				return ship;
 			}
@@ -30,7 +30,7 @@ public class MultiLevelPier {
 	public IDecks getDecks(int i, int j) {
 		if(i > -1 && i < pierStages.size()) {
 			if(j > -1 && j < pierStages.get(i).maxCount) {
-				IDecks decks = pierStages.get(i).placesDecks.get(j);
+				IDecks decks = pierStages.get(i).getPlacesDeck(j);
 				pierStages.get(i).minus(j);
 				return decks;
 			}
