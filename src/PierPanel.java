@@ -7,6 +7,9 @@ public class PierPanel extends JPanel {
 	public PierPanel(Pier<ITransport, IDecks> pier) {
 		this.pier = pier;
 	}
+	public void setPier(Pier<ITransport, IDecks> pier) {
+		this.pier = pier;
+	}
 	public void paint(Graphics g) {
 		super.paint(g);
 		pier.draw(g);
