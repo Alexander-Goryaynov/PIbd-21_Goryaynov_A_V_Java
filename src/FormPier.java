@@ -33,8 +33,6 @@ public class FormPier {
 	private JFrame frame;
 	private JTextField textFieldIndex;
 	private PierPanel panelPier;
-	private JButton btnParkShip;
-	private JButton btnParkDieselShip;
 	private JButton btnTake;
 	private TakePanel panelTake;
 	private JList<String> list;
@@ -99,51 +97,6 @@ public class FormPier {
 		});
 		frame.getContentPane().add(list);
 		
-		btnParkShip = new JButton("\u041F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
-		btnParkShip.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-		btnParkShip.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Color newColor = JColorChooser.showDialog(frame, "Цвет корабля", Color.blue);
-				if (newColor != null) {
-					ship = new Ship(100, 1000, newColor, Color.blue);
-					int place = pier.getPier(list.getSelectedIndex()).plus(ship);
-					panelPier.repaint();
-				}
-			}
-		});
-		btnParkShip.setBounds(912, 205, 154, 36);
-		frame.getContentPane().add(btnParkShip);
-		
-		btnParkDieselShip = new JButton("\u041F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u043F\u043B\u043E\u0445\u043E\u0434");
-		btnParkDieselShip.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnParkDieselShip.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Color mainColor = JColorChooser.showDialog(frame, "Основной цвет теплохода", Color.blue);
-				if (mainColor != null) {
-					Color dopColor = JColorChooser.showDialog(frame, "Дополнительный цвет теплохода", Color.blue);
-					if (dopColor != null) {
-						ship = new DieselShip(100, 1000, Decks.One, mainColor, dopColor, Color.yellow, true, true);
-						Random rnd = new Random();
-						switch (rnd.nextInt(3)) {
-							case 0:
-								deck = new StandardDecks();
-								break;
-							case 1:
-								deck = new RoundedDecks();
-								break;
-							case 2:
-								deck = new TrapezeDecks();
-								break;
-						}
-						int place = pier.getPier(list.getSelectedIndex()).plus(ship, deck);
-						panelPier.repaint();
-					}					
-				}
-			}
-		});
-		btnParkDieselShip.setBounds(912, 252, 154, 36);
-		frame.getContentPane().add(btnParkDieselShip);
-		
 		JLabel label = new JLabel("\u0417\u0430\u0431\u0440\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C:");
 		label.setBounds(926, 301, 122, 14);
 		frame.getContentPane().add(label);
@@ -199,5 +152,17 @@ public class FormPier {
 		});
 		btnShowCollection.setBounds(929, 406, 119, 23);
 		frame.getContentPane().add(btnShowCollection);
+		
+		JButton btnAddShip = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
+		btnAddShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShipConfig configFrame = new ShipConfig();
+				configFrame.frame.setVisible(true);
+				configFrame.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				configFrame.initializeConfig(panelPier, pier, list);
+			}
+		});
+		btnAddShip.setBounds(917, 230, 147, 44);
+		frame.getContentPane().add(btnAddShip);
 	}
 }

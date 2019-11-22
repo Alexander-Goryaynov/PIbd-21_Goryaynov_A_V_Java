@@ -63,5 +63,4 @@ public class DieselShip extends Ship {
             g.fillOval(startPosX - 43, startPosY + 10, 5, 5);
         }
 	}
-	
 }

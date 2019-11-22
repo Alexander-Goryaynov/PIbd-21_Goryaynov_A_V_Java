@@ -31,13 +31,13 @@ public abstract class SeaVehicle implements ITransport {
 	public Color getMainColor() {
 		return mainColor;
 	}
-	protected void setMainColor(Color mainColor) {
+	public void setMainColor(Color mainColor) {
 		this.mainColor = mainColor;
 	}
 	public Color getDopColor() {
 		return dopColor;
 	}
-	protected void setDopColor(Color dopColor) {
+	public void setDopColor(Color dopColor) {
 		this.dopColor = dopColor;
 	}
 	public void setPosition(int x, int y, int width, int height)
