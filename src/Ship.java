@@ -75,4 +75,22 @@ public class Ship extends SeaVehicle {
         }
         
     }
+    public void drawBasement(Graphics g) {
+    	int[] xPoints = {startPosX - 45, startPosX + 45, 
+        		startPosX + 30, startPosX - 40};
+        int[] yPoints = {startPosY + 10, startPosY + 10, 
+        		startPosY + 25, startPosY + 25};
+        int nPoints = 4;
+        g.setColor(mainColor);
+        g.fillPolygon(xPoints, yPoints, nPoints);
+        g.setColor(Color.black);
+        g.drawPolygon(xPoints, yPoints, nPoints);
+        for (int i = startPosX-35; i <= startPosX + 25; i += 15)
+        {
+        	g.setColor(dopColor);
+            g.fillOval(i, startPosY + 17, 3, 3);
+            g.setColor(Color.black);
+            g.drawOval(i, startPosY + 17, 3, 3);
+        }
+    }
 }
