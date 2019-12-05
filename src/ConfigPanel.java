@@ -3,6 +3,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class ConfigPanel extends JPanel {
 	private ITransport ship;
 	private IDecks decks;

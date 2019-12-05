@@ -16,7 +16,8 @@ public class TrapezeDecks implements IDecks {
 		this.positionY = positionY;
 	}
 	@Override
-	public void drawPierDecks(Graphics g, int positionX, int positionY, Color decksColor, Color dopColor) {
+	public void drawPierDecks(Graphics g, int positionX, int positionY, Color decksColor, 
+			Color dopColor) {
 		g.setColor(decksColor);
     	int[] xPoints = {positionX - 25, positionX - 20, 
         		positionX + 20, positionX + 25};
@@ -26,8 +27,7 @@ public class TrapezeDecks implements IDecks {
         g.fillPolygon(xPoints, yPoints, nPoints);
         g.setColor(Color.black);
         g.drawPolygon(xPoints, yPoints, nPoints);
-        for (int i = positionX - 20; i <= positionX + 10; i += 15) 
-        {
+        for (int i = positionX - 20; i <= positionX + 10; i += 15) {
         	g.setColor(dopColor);
             g.fillRect(i, positionY - 17, 10, 5);
             g.setColor(Color.black);
@@ -42,8 +42,7 @@ public class TrapezeDecks implements IDecks {
     	g.fillPolygon(xPoints, yPoints, nPoints);
         g.setColor(Color.black);
         g.drawPolygon(xPoints, yPoints, nPoints);                
-        for (int i = positionX - 25; i <= positionX + 15; i += 20)
-        {
+        for (int i = positionX - 25; i <= positionX + 15; i += 20) {
         	g.setColor(dopColor);
             g.fillRect(i, positionY - 7, 10, 5);
             g.setColor(Color.black);
@@ -58,8 +57,7 @@ public class TrapezeDecks implements IDecks {
     	g.fillPolygon(xPoints, yPoints, nPoints);
         g.setColor(Color.black);
         g.drawPolygon(xPoints, yPoints, nPoints); 
-        for (int i = positionX - 30; i <= positionX + 20; i += 25)
-        {
+        for (int i = positionX - 30; i <= positionX + 20; i += 25) {
         	g.setColor(dopColor);
             g.fillRect(i, positionY + 3, 10, 5);
             g.setColor(Color.black);
@@ -67,10 +65,10 @@ public class TrapezeDecks implements IDecks {
         }
 	}
 	@Override
-	public void drawDecks(Decks numDeck, Graphics g, Color decksColor, Color dopColor, int startPosX, int startPosY) {
+	public void drawDecks(Decks numDeck, Graphics g, Color decksColor, Color dopColor, 
+			int startPosX, int startPosY) {
 		// third deck
-        if (numDeck == Decks.Three)
-        {
+        if (numDeck == Decks.Three) {
         	g.setColor(decksColor);
         	int[] xPoints = {startPosX - 25, startPosX - 20, 
             		startPosX + 20, startPosX + 25};
@@ -80,8 +78,7 @@ public class TrapezeDecks implements IDecks {
             g.fillPolygon(xPoints, yPoints, nPoints);
             g.setColor(Color.black);
             g.drawPolygon(xPoints, yPoints, nPoints);
-            for (int i = startPosX - 20; i <= startPosX + 10; i += 15) 
-            {
+            for (int i = startPosX - 20; i <= startPosX + 10; i += 15) {
             	g.setColor(dopColor);
                 g.fillRect(i, startPosY - 17, 10, 5);
                 g.setColor(Color.black);
@@ -89,8 +86,7 @@ public class TrapezeDecks implements IDecks {
             }
         }
         // second deck
-        if ((numDeck == Decks.Three) || (numDeck == Decks.Two))
-        {
+        if ((numDeck == Decks.Three) || (numDeck == Decks.Two)) {
         	int[] xPoints = {startPosX - 30, startPosX - 25, 
             		startPosX + 25, startPosX + 30};
             int[] yPoints = {startPosY, startPosY - 10, 
@@ -100,8 +96,7 @@ public class TrapezeDecks implements IDecks {
         	g.fillPolygon(xPoints, yPoints, nPoints);
             g.setColor(Color.black);
             g.drawPolygon(xPoints, yPoints, nPoints);                
-            for (int i = startPosX - 25; i <= startPosX + 15; i += 20)
-            {
+            for (int i = startPosX - 25; i <= startPosX + 15; i += 20) {
             	g.setColor(dopColor);
                 g.fillRect(i, startPosY - 7, 10, 5);
                 g.setColor(Color.black);
@@ -118,13 +113,15 @@ public class TrapezeDecks implements IDecks {
     	g.fillPolygon(xPoints, yPoints, nPoints);
         g.setColor(Color.black);
         g.drawPolygon(xPoints, yPoints, nPoints); 
-        for (int i = startPosX - 30; i <= startPosX + 20; i += 25)
-        {
+        for (int i = startPosX - 30; i <= startPosX + 20; i += 25) {
         	g.setColor(dopColor);
             g.fillRect(i, startPosY + 3, 10, 5);
             g.setColor(Color.black);
             g.drawRect(i, startPosY + 3, 10, 5);                    
         }
 	}
-
+	@Override
+	public String toString() {
+		return "TrapezeDecks";
+	}
 }
