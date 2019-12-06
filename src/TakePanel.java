@@ -2,6 +2,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class TakePanel extends JPanel {
 	public ITransport ship;
 	public IDecks deck;

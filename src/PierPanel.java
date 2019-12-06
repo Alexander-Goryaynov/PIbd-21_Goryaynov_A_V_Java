@@ -2,6 +2,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class PierPanel extends JPanel {
 	private Pier<ITransport, IDecks> pier;
 	public PierPanel(Pier<ITransport, IDecks> pier) {

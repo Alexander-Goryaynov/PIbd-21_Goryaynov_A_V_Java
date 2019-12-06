@@ -40,8 +40,7 @@ public abstract class SeaVehicle implements ITransport {
 	public void setDopColor(Color dopColor) {
 		this.dopColor = dopColor;
 	}
-	public void setPosition(int x, int y, int width, int height)
-    {
+	public void setPosition(int x, int y, int width, int height) {
         startPosX = x;
         startPosY = y;
         pictureWidth = width;

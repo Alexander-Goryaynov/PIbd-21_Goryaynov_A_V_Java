@@ -9,4 +9,5 @@ public interface IDecks {
 	public void setPosition(int positionX, int positionY);
 	public int getPositionX();
 	public int getPositionY();
+	public String toString();
 }

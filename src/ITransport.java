@@ -11,4 +11,5 @@ public interface ITransport {
     Color getDopColor();
     int getStartPosX();
     int getStartPosY();
+    String getConfig();
 }

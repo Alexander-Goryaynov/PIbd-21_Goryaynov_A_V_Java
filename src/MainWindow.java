@@ -2,7 +2,6 @@ import java.awt.EventQueue;
 import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
