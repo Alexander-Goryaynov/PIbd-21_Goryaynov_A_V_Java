@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -10,6 +11,10 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 
@@ -32,6 +37,7 @@ public class ShipConfig {
 	private MultiLevelPier currentPier;
 	private JList<String> currentList;
 	private JButton btnAdd;
+	private Logger logger_error;
 
 	/**
 	 * Launch the application.
@@ -66,6 +72,19 @@ public class ShipConfig {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		logger_error = Logger.getLogger(FormPier.class.getName() + "2");
+		try {			
+			FileHandler fh_error = null;			
+			fh_error = new FileHandler("C:\\temp\\file_error.txt");
+			logger_error.addHandler(fh_error);
+			logger_error.setUseParentHandlers(false);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fh_error.setFormatter(formatter);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setTitle("\u041A\u043E\u043D\u0444\u0438\u0433\u0443\u0440\u0430\u0442\u043E\u0440 \u043A\u043E\u0440\u0430\u0431\u043B\u044F");
 		frame.setBounds(100, 100, 594, 318);
@@ -247,14 +266,20 @@ public class ShipConfig {
 		btnAdd = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if((panelShip.getShip() != null) && (panelShip.getDecks() != null)) {
-					currentPier.getPier(currentList.getSelectedIndex()).plus(panelShip.getShip(), panelShip.getDecks());
-					currentPierPanel.repaint();
-				}else if((panelShip.getShip() != null) && (panelShip.getDecks() == null)) {
-					currentPier.getPier(currentList.getSelectedIndex()).plus(panelShip.getShip());
-					currentPierPanel.repaint();
+				try {
+					if((panelShip.getShip() != null) && (panelShip.getDecks() != null)) {
+						currentPier.getPier(currentList.getSelectedIndex()).plus(panelShip.getShip(), panelShip.getDecks());
+						currentPierPanel.repaint();
+					}else if((panelShip.getShip() != null) && (panelShip.getDecks() == null)) {
+						currentPier.getPier(currentList.getSelectedIndex()).plus(panelShip.getShip());
+						currentPierPanel.repaint();
+					}
+					frame.dispose();
+				} catch (PierOverflowException ex) {
+					logger_error.warning("Причал переполнен");
+					JOptionPane.showMessageDialog(frame, "Причал переполнен",
+							"Exception", JOptionPane.ERROR_MESSAGE);
 				}
-				frame.dispose();
 			}
 		});
 		btnAdd.setBounds(379, 153, 137, 46);
