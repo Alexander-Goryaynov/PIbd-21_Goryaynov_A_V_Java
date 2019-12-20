@@ -10,8 +10,17 @@ public class Pier<T extends ITransport, U extends IDecks> {
     private int pictureHeight;
     public int maxCount;
     
-	public T getPlace(int i) {
-		return places.get(i);
+	public T getPlace(int i) throws PierNotFoundException {
+		if (places.get(i) != null) {
+			return places.get(i);
+		}
+		throw new PierNotFoundException(i);
+	}
+	public T showPlace(int i) {
+		if (places.get(i) != null) {
+			return places.get(i);
+		}
+		return null;	// without any exceptions
 	}
 	public U getPlacesDeck(int i) {
 		return placesDecks.get(i);
@@ -38,7 +47,7 @@ public class Pier<T extends ITransport, U extends IDecks> {
         setPictureHeight(pictureHeight);
         this.maxCount = sizes;
     }
-    public int plus(T ship) {
+    public int plus(T ship) throws PierOverflowException {
     	for (int i = 0; i < maxCount; i++) {
             if (checkFreePlace(i)) {
                 places.put(i, ship);
@@ -47,9 +56,9 @@ public class Pier<T extends ITransport, U extends IDecks> {
                 return i;
             }
         }
-        return -1;
+        throw new PierOverflowException();
     }
-    public int plus(T ship, U decks) {
+    public int plus(T ship, U decks) throws PierOverflowException {
     	for (int i = 0; i < maxCount; i++) {
             if (checkFreePlace(i)) {
                 places.put(i, ship);
@@ -61,16 +70,16 @@ public class Pier<T extends ITransport, U extends IDecks> {
                 return i;
             }
         }
-        return -1;
+        throw new PierOverflowException();
     }
-    public T minus(int index) {
+    public T minus(int index) throws PierNotFoundException {
     	if (index < 0 || index > maxCount) return null;
         if (!checkFreePlace(index)) {
             T ship = places.get(index);
             places.remove(index);
             return ship;
         }
-        return null;
+        throw new PierNotFoundException(index);
     }
     public U minusDecks(int index) {
     	if (index < 0 || index > maxCount) {
@@ -86,16 +95,16 @@ public class Pier<T extends ITransport, U extends IDecks> {
     private boolean checkFreePlace(int index){
         return !(places.containsKey(index));
     }
-    public int plus(T ship, int index) {
+    public int plus(T ship, int index) throws PierOccupiedPlaceException{
     	if (checkFreePlace(index)) {
     		places.put(index, ship);
     		places.get(index).setPosition(65 + index / 5 * placeSizeWidth,
     				index % 5 * placeSizeHeight + 50, pictureWidth, pictureHeight);
     		return index;
     	}
-    	return -1;
+    	throw new PierOccupiedPlaceException(index);
     }    
-    public int plus(T ship, U decks, int index) {
+    public int plus(T ship, U decks, int index) throws PierOccupiedPlaceException {
     	if (checkFreePlace(index)) {
     		places.put(index, ship);
     		places.get(index).setPosition(65 + index / 5 * placeSizeWidth, 
@@ -105,7 +114,7 @@ public class Pier<T extends ITransport, U extends IDecks> {
             		places.get(index).getStartPosY());
     		return index;
     	}
-    	return -1;
+    	throw new PierOccupiedPlaceException(index);
     }
     public void draw(Graphics g){
     	drawMarking(g);
