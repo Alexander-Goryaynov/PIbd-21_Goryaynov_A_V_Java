@@ -61,8 +61,7 @@ public class FormPier {
 			}
 		});
 	}
-	public FormPier() throws PierNotFoundException, PierOverflowException, 
-	SecurityException, IOException, PierOccupiedPlaceException {
+	public FormPier() {
 		initialize();
 	}
 
@@ -70,8 +69,7 @@ public class FormPier {
 	 * Initialize the contents of the frame.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void initialize() throws SecurityException, IOException, PierNotFoundException,
-	PierOccupiedPlaceException, PierOverflowException {		
+	private void initialize()  {		
 		logger = Logger.getLogger(FormPier.class.getName() + "1");
 		logger_error = Logger.getLogger(FormPier.class.getName() + "2");
 		try {
