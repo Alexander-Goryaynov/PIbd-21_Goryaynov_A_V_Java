@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -102,9 +101,7 @@ public class MultiLevelPier {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			buffer = br.readLine();
-			if (buffer.equals("SingleLevel")) {
-				/*pierStages.set(index, new Pier<>(countPlaces, pictureWidth, pictureHeight));*/				
-			} else {
+			if (!(buffer.equals("SingleLevel"))) {		
 				br.close();
 				return false;
 			}
