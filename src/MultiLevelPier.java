@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MultiLevelPier {
 	ArrayList<Pier<ITransport, IDecks>> pierStages;
@@ -137,24 +138,20 @@ public class MultiLevelPier {
 			for (Pier<ITransport, IDecks> level : pierStages) {
 				bw.write("Level");
 				bw.newLine();
-				for (int i = 0; i < countPlaces; i++) {
-					ITransport ship = level.showPlace(i);
-					if (ship != null) {
-						if (!(ship instanceof DieselShip)) {
-							bw.write(i + ":Ship:" + ship.getConfig());
-							bw.newLine();
+				for (ITransport ship : level) {
+					if (!(ship instanceof DieselShip)) {
+						bw.write(level.getKey() + ":Ship:" + ship.getConfig());
+						bw.newLine();
+					} else {
+						if (level.getPlacesDeck(level.getKey()) != null) {
+							bw.write(level.getKey() + ":DieselShip:" + level.getPlacesDeck(
+									level.getKey()).toString() + ":" + ship.getConfig());
 						} else {
-							IDecks decks = level.getPlacesDeck(i);
-							if (decks != null) {
-								bw.write(i + ":DieselShip:" + decks.toString() + ":" + 
-										ship.getConfig());
-							} else {
-								bw.write(i + ":DieselShip:" + "StandardDecks" + ":" +
-										ship.getConfig());
-							}
-							bw.newLine();
+							bw.write(level.getKey() + ":DieselShip:" + "StandardDecks" + ":" +
+									ship.getConfig());
 						}
-					}
+						bw.newLine();
+					}					
 				}
 			}
 			bw.close();
@@ -194,5 +191,17 @@ public class MultiLevelPier {
 		} catch (IOException ex) {
 			throw ex;
 		}
+	}
+	public String getProperties() {
+		String res = "";
+		for (Pier<ITransport, IDecks> level : pierStages) {
+			for (ITransport ship : level) {
+				res = res + ship.getConfig() + "\n";
+			}
+		}
+		return res;
+	}
+	public void sort() {
+		Collections.sort(pierStages);
 	}
 }

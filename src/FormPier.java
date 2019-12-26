@@ -122,15 +122,15 @@ public class FormPier {
 		frame.getContentPane().add(list);
 		
 		JLabel label = new JLabel("\u0417\u0430\u0431\u0440\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C:");
-		label.setBounds(827, 301, 122, 14);
+		label.setBounds(830, 273, 122, 14);
 		frame.getContentPane().add(label);
 		
 		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
-		label_1.setBounds(837, 326, 48, 14);
+		label_1.setBounds(840, 298, 48, 14);
 		frame.getContentPane().add(label_1);
 		
 		textFieldIndex = new JTextField();
-		textFieldIndex.setBounds(891, 326, 58, 20);
+		textFieldIndex.setBounds(894, 298, 58, 20);
 		frame.getContentPane().add(textFieldIndex);
 		textFieldIndex.setColumns(10);
 		
@@ -167,12 +167,12 @@ public class FormPier {
 				}
 			}
 		});
-		btnTake.setBounds(830, 355, 119, 23);
+		btnTake.setBounds(850, 327, 102, 23);
 		frame.getContentPane().add(btnTake);
 		
 		panelTake = new TakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelTake.setBounds(799, 438, 215, 118);
+		panelTake.setBounds(800, 453, 215, 118);
 		frame.getContentPane().add(panelTake);
 		
 		JButton btnShowCollection = new JButton("\u041A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u044F");
@@ -184,7 +184,7 @@ public class FormPier {
 				info.setVisible(true);
 			}
 		});
-		btnShowCollection.setBounds(837, 389, 119, 23);
+		btnShowCollection.setBounds(843, 357, 106, 23);
 		frame.getContentPane().add(btnShowCollection);
 		
 		JButton btnAddShip = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043E\u0440\u0430\u0431\u043B\u044C");
@@ -203,7 +203,7 @@ public class FormPier {
 				}
 			}
 		});
-		btnAddShip.setBounds(827, 244, 147, 44);
+		btnAddShip.setBounds(830, 234, 155, 26);
 		frame.getContentPane().add(btnAddShip);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -260,8 +260,7 @@ public class FormPier {
 						if(result == JFileChooser.APPROVE_OPTION) {
 							pier.saveData(chooser.getSelectedFile().getPath());
 								logger.info("Сохранение прошло успешно");
-								JOptionPane.showMessageDialog(null, "Сохранение прошло успешно");
-							
+								JOptionPane.showMessageDialog(null, "Сохранение прошло успешно");							
 						}
 					} 
 					 catch (Exception e1) {						
@@ -328,5 +327,28 @@ public class FormPier {
 			}
 		});
 		menuFile.add(menuItemSaveLevel);
+		
+		JButton btnSort = new JButton("\u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C");
+		btnSort.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pier.sort();
+				panelPier.repaint();
+				logger.info("Сортировка уровней");
+			}
+		});
+		btnSort.setBounds(830, 419, 122, 23);
+		frame.getContentPane().add(btnSort);
+		
+		JButton btnShowProperties = new JButton("\u0421\u0432\u043E\u0439\u0441\u0442\u0432\u0430");
+		btnShowProperties.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PropertiesInfo properties = new PropertiesInfo();
+				properties.showProperties(pier.getProperties());
+				properties.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				properties.setVisible(true);
+			}
+		});
+		btnShowProperties.setBounds(840, 391, 106, 23);
+		frame.getContentPane().add(btnShowProperties);
 	}
 }

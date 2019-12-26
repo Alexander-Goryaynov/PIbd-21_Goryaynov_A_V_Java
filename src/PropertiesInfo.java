@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.util.Hashtable;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -8,14 +7,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
-public class CollectionInfo extends JDialog {
+public class PropertiesInfo extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextArea textArea;
 
 	public static void main(String[] args) {
 		try {
-			CollectionInfo dialog = new CollectionInfo();
+			PropertiesInfo dialog = new PropertiesInfo();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -23,8 +22,8 @@ public class CollectionInfo extends JDialog {
 		}
 	}
 
-	public CollectionInfo() {
-		setTitle("\u041A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u044F");
+	public PropertiesInfo() {
+		setTitle("\u0421\u0432\u043E\u0439\u0441\u0442\u0432\u0430");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -35,15 +34,10 @@ public class CollectionInfo extends JDialog {
 		contentPanel.add(textArea);
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		getContentPane().add(buttonPane, BorderLayout.SOUTH);		
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 	}
 	
-	public void showCollection(Hashtable<Integer, ITransport> h1, Hashtable<Integer, IDecks> h2) {
-		String result = "";
-		for (int i = 0; i < h1.size(); i++) {
-			result = result + h1.get(i) + "\n" + h2.get(i) + "\n";
-		}
-		textArea.setText(result);
+	public void showProperties(String input) {
+		textArea.setText(input);
 	}
-
 }

@@ -2,13 +2,17 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.HashMap;
+import java.util.Iterator;
 
-public class Pier<T extends ITransport, U extends IDecks> {
+public class Pier<T extends ITransport, U extends IDecks> implements
+			Comparable<Pier<T, U>>, Iterable<T>, Iterator<T> {
 	private HashMap<Integer, T> places;
 	private HashMap<Integer, U> placesDecks;
 	private int pictureWidth;
     private int pictureHeight;
     public int maxCount;
+    private int curIndex;
+    
     
 	public T getPlace(int i) throws PierNotFoundException {
 		if (places.get(i) != null) {
@@ -46,8 +50,10 @@ public class Pier<T extends ITransport, U extends IDecks> {
         setPictureWidth(pictureWidth);
         setPictureHeight(pictureHeight);
         this.maxCount = sizes;
+        curIndex = -1;
     }
-    public int plus(T ship) throws PierOverflowException {
+    public int plus(T ship) throws PierOverflowException, PierAlreadyHaveException {
+    	if (places.containsValue(ship)) throw new PierAlreadyHaveException();
     	for (int i = 0; i < maxCount; i++) {
             if (checkFreePlace(i)) {
                 places.put(i, ship);
@@ -58,7 +64,9 @@ public class Pier<T extends ITransport, U extends IDecks> {
         }
         throw new PierOverflowException();
     }
-    public int plus(T ship, U decks) throws PierOverflowException {
+    public int plus(T ship, U decks) throws PierOverflowException, PierAlreadyHaveException {
+    	if((places.containsValue(ship)) && (placesDecks.containsValue(decks)))
+			throw new PierAlreadyHaveException();
     	for (int i = 0; i < maxCount; i++) {
             if (checkFreePlace(i)) {
                 places.put(i, ship);
@@ -153,4 +161,54 @@ public class Pier<T extends ITransport, U extends IDecks> {
         }
         g2.setStroke((new BasicStroke(1f)));
     }
+    public int getKey() {
+    	return (int)places.keySet().toArray()[curIndex];
+    }
+    public int compareTo(Pier<T, U> other) {
+    	if (places.size() > other.places.size()) return -1;
+        else if (places.size() < other.places.size()) return 1;
+        else if (places.size() > 0) {
+        	Object[] thisKeys = places.keySet().toArray();
+        	Object[] otherKeys = other.places.keySet().toArray();
+            for (int i = 0; i < places.size(); ++i) {
+                if (places.get(thisKeys[i]).getClass().getName().equals("Ship") && 
+                		other.places.get(thisKeys[i]).getClass().getName().equals("DieselShip"))
+                	return 1;
+                if (places.get(thisKeys[i]).getClass().getName().equals("DieselShip") &&
+                		other.places.get(thisKeys[i]).getClass().getName().equals("Ship"))
+                	return -1;
+                if (places.get(thisKeys[i]).getClass().getName().equals("Ship") &&
+                		other.places.get(thisKeys[i]).getClass().getName().equals("Ship")) {
+                	Ship thisShip = (Ship)places.get(thisKeys[i]);
+                    Ship otherShip = (Ship)other.places.get(otherKeys[i]);
+                    return thisShip.compareTo(otherShip);
+                }
+                if(places.get(thisKeys[i]).getClass().getName().equals("DieselShip") &&
+                		other.places.get(thisKeys[i]).getClass().getName().equals("DieselShip")) {
+                	DieselShip thisShip = (DieselShip)places.get(thisKeys[i]);
+                    DieselShip otherShip = (DieselShip)other.places.get(otherKeys[i]);
+                    return thisShip.compareTo(otherShip);
+                }
+            }
+        }
+        return 0;
+    }
+
+	@Override
+	public Iterator<T> iterator() {
+		return this;
+	}
+
+	@Override
+	public boolean hasNext() {
+		if ((curIndex + 1) >= places.size()) {
+			curIndex = -1;
+			return false;
+		} else return true;
+	}
+	@Override
+	public T next() {
+		curIndex++;
+		return places.get(curIndex); 
+	}
 }
