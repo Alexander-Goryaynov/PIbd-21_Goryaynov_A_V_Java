@@ -1,8 +1,10 @@
 import java.awt.*;
 import java.util.Iterator;
 
+import java.lang.Class;
+
 public class Ship extends SeaVehicle implements Comparable<Ship>, 
-			Iterable<String>, Iterator<String> {
+			Iterable<Integer>, Iterator<Integer> {
     protected final int shipWidth = 90;
     protected final int shipHeight = 50;
     private int curIndex = -1;
@@ -121,19 +123,30 @@ public class Ship extends SeaVehicle implements Comparable<Ship>,
 	}
 	@Override
 	public boolean hasNext() {
-		if (curIndex + 1 >= getConfig().split(";").length) {
+		if (curIndex + 1 >= 4) {
 			curIndex = -1;
 			return false;
 		}
 		return true;
 	}
 	@Override
-	public String next() {
+	public Integer next() {
 		curIndex++;
-		return getConfig().split(";")[curIndex];
+		switch (curIndex) {
+		case 0:
+			return maxSpeed;			
+		case 1:
+			return weight;
+		case 2:
+			return mainColor.getRGB();
+		case 3:
+			return dopColor.getRGB();
+		default:
+			return 0;
+		}
 	}
 	@Override
-	public Iterator<String> iterator() {
+	public Iterator<Integer> iterator() {
 		return this;
 	}
 }
