@@ -12,8 +12,6 @@ public class Pier<T extends ITransport, U extends IDecks> implements
     private int pictureHeight;
     public int maxCount;
     private int curIndex;
-    
-    
 	public T getPlace(int i) throws PierNotFoundException {
 		if (places.get(i) != null) {
 			return places.get(i);
@@ -193,12 +191,10 @@ public class Pier<T extends ITransport, U extends IDecks> implements
         }
         return 0;
     }
-
 	@Override
 	public Iterator<T> iterator() {
 		return this;
 	}
-
 	@Override
 	public boolean hasNext() {
 		if ((curIndex + 1) >= places.size()) {
