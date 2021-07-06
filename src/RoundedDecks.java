@@ -93,4 +93,16 @@ public class RoundedDecks implements IDecks {
 	public String toString() {
 		return "RoundedDecks";
 	}
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return true;
+	}
 }

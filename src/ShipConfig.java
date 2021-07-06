@@ -279,6 +279,9 @@ public class ShipConfig {
 					logger_error.warning("Причал переполнен");
 					JOptionPane.showMessageDialog(frame, "Причал переполнен",
 							"Exception", JOptionPane.ERROR_MESSAGE);
+				} catch (PierAlreadyHaveException ex) {
+					logger_error.warning("На пристани уже есть такой корабль");
+					JOptionPane.showMessageDialog(frame, "На пристани уже есть такой корабль");
 				}
 			}
 		});

@@ -1,8 +1,13 @@
 import java.awt.*;
+import java.util.Iterator;
 
-public class Ship extends SeaVehicle {
+import java.lang.Class;
+
+public class Ship extends SeaVehicle implements Comparable<Ship>, 
+			Iterable<Integer>, Iterator<Integer> {
     protected final int shipWidth = 90;
     protected final int shipHeight = 50;
+    private int curIndex = -1;
     public Ship(int maxSpeed, int weight, Color mainColor, Color dopColor) {
     	this.setMaxSpeed(maxSpeed);
     	this.setWeight(weight);
@@ -94,5 +99,54 @@ public class Ship extends SeaVehicle {
     }	
 	public String getConfig() {
 		return (maxSpeed + ";" + weight + ";" + mainColor.getRGB());
+	}
+	@Override
+	public int compareTo(Ship other) {
+		if (other == null) return 1;
+		if (maxSpeed != other.maxSpeed) return Integer.compare(maxSpeed, other.maxSpeed);
+        if (mainColor != other.mainColor) return Integer.compare(mainColor.getRGB(), 
+        		other.mainColor.getRGB());
+		return 0;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		Ship other = (Ship) obj;
+		if (!mainColor.equals(other.mainColor)) return false;
+		if (maxSpeed != other.maxSpeed) return false; 
+		return true;
+	}
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+	@Override
+	public boolean hasNext() {
+		if (curIndex + 1 >= 4) {
+			curIndex = -1;
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public Integer next() {
+		curIndex++;
+		switch (curIndex) {
+		case 0:
+			return maxSpeed;			
+		case 1:
+			return weight;
+		case 2:
+			return mainColor.getRGB();
+		case 3:
+			return dopColor.getRGB();
+		default:
+			return 0;
+		}
+	}
+	@Override
+	public Iterator<Integer> iterator() {
+		return this;
 	}
 }

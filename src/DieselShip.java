@@ -105,4 +105,38 @@ public class DieselShip extends Ship {
 		return (super.getConfig() + ";" + dopColor.getRGB() + ";" + lightsColor.getRGB() +
 				";" + pipe + ";" + lights); 
 	}
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass()) {
+			return false;
+		} else {			
+		return equals((DieselShip)obj);
+		}
+	}
+	public boolean equals(DieselShip other) {
+		if (weight != other.weight) return false;
+		if (!mainColor.equals(other.mainColor)) return false;
+		if (!dopColor.equals(other.dopColor)) return false;
+		if (pipe != other.pipe) return false;
+		if (lights != other.lights) return false;
+		return true;
+	}
+	public int compareTo(DieselShip other) {
+		if (other == null) return 1;
+		if (!mainColor.equals(other.mainColor))
+        	return Integer.compare(mainColor.getRGB(), other.mainColor.getRGB());
+        if (!dopColor.equals(other.dopColor))
+        	return Integer.compare(dopColor.getRGB(), other.dopColor.getRGB());
+        if (pipe != other.pipe)
+        	return Boolean.compare(pipe, other.pipe);
+        if (lights != other.lights)
+        	return Boolean.compare(lights, other.lights);
+        return 0;
+	}
 }
